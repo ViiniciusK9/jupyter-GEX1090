@@ -1,0 +1,2 @@
+n_hidden_layers,hidden_units,activation,learning_rate_init,alpha
+4,30,relu,0.003456301036069964,1.5596988905001667e-05
