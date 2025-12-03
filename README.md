@@ -286,3 +286,53 @@ A regularização L2 é um hiperparâmetro que controla o “peso” da penaliza
 ### 4) Treine o modelo final com os melhores hyperparâmetros e compare os resultados com o modelo Random Forest
 
 ---
+
+## Atividade 5: Modelagem com Kolmogorov-Arnold-Networks (KAN)
+
+Observações: Sigam o repositório [pykan](https://github.com/KindXiaoming/pykan) para instalar a biblioteca pykan.
+
+### 1) Dados para o modelo
+
+Utilize o mesmo conjunto de dados pré-processado e normalizado da atividade anterior.
+
+### 2) Modelo KAN: Parâmetros importantes
+
+- `grid_size`: o número de pontos da malha da spline (ex. 5-20).
+- `k`: grau do B-spline (Ex. 2 ou 3).
+- `hidden_layers`: número de camadas intermediárias: (Ex. 1-4).
+- `hidden_units`: quantidade de neurônios por camada (Ex. 5).
+
+--> Note que no pykan as camadas são definidas com "layers = [5, 11, 4, 2]". Neste exemplo, são 5 neurônios de entrada (5 sensores), duas camadas ocultas, uma com 11 e outra com 4 neurônios, e a camada de saída com 2 neurônios (ex. para nível de água e total).
+
+- `otimizadores`: Adam, Nadam, LBGFS.
+- `steps`: o número de épocas (ex. 50).
+- `batch_size`: nem precisa configurar, em geral esse parâmetro é pouco relevante em KAN. É mais sensível à regularização, grid_size e k. O pykan atua por padrão com fullbatch.
+- `learning_rate`: o número que controla o tamanho dos passos que o modelo dá ao ajustar seus parâmetros durante o treinamento.
+- `regularização L2`: a técnica usada para evitar overfitting penalizando pesos muito grandes.
+
+### 3) Otimização de hiperparâmetros
+
+Utilize o Optuna (ou o otimizador que preferir) para encontrar o melhor conjunto de parâmetros.
+
+Sugestão de busca:
+
+- `hidden_layer`: 1 a 4
+- `hidden_units`: entre o número e features e 32.
+- `grid_size`: 5 a 20
+- `k`: 3
+- `learning_rate`: 1e-5 a 1e-2
+- `otimizador`: Adam, Nadam, LBGFS
+- `regularização L2`: 1e-6 a 1e-2
+
+### 4) Treinamento e avaliação
+
+Treine com "early stop" e usando o mesmo número de épocas que usou no MLP. Avalie o modelo usando **RMSE, MAE e r2** 
+
+### 5) Análise
+
+Compare o desempenho do KAN com Ranfom Forest e MLP.
+Faça gráficos para apoiar a sua análise.
+
+### 6) Entrega
+
+Entregue o pdf do notebook no Sigaa, e se prepare para apresentar na aula do dia 09/12, em 10 minutos.
